@@ -40,6 +40,11 @@ For comparison videos, avoid broad model-war claims. Use:
    - Keep the claim narrow: "on these test cases."
    - Caption: `Custom pipeline recovers dictionary structure from difficult Sgaw Karen text`
 
+6. **Optional Dictionary Lookup Proof**
+   - Show `pipeline/dictionary_processing/local_translator_suite/` running a lookup, cache result, reverse parse, and batch output.
+   - Position it as supporting evidence, not the main hero.
+   - Caption: `Dictionary lookup and reverse parsing after OCR`
+
 ## Thumbnail
 
 Use one clean static thumbnail:

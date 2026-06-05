@@ -29,6 +29,10 @@ parts_speech.json
 sk_dictionary.json
 skeleton_headwords.json
 karendictdatabase.json
+lookup_attempts.json
+karen_reverse_cache.json
+translations_updated.txt
+*.bad-*
 
 # Large/generated OCR artifacts
 app_data/

@@ -4,6 +4,8 @@ This repository is a portfolio-ready cleanup of a custom OCR and dictionary-proc
 
 The work combines synthetic dataset generation, YOLO training/inference, legacy dictionary processing, KNU font decoding, Gemini-assisted dictionary extraction, and a Flask review workbench for turning OCR output into structured dictionary entries.
 
+This is also the consolidation point for the earlier Karen language repos under `otpayt02`: web-scraper experiments, OCR-language positioning notes, and the standalone Sgaw Karen dictionary builder. Only the useful final material was kept here; generated logs, large samples, and early scaffolds were left out.
+
 ## Highlights
 
 - Generated a Roboflow/YOLO-style syllable dataset for thousands of Sgaw Karen syllable patterns.
@@ -24,6 +26,7 @@ The most portfolio-worthy implementation is the combined pipeline below:
 - `pipeline/dictionary_processing/042_build_KNU_decoder.py` - KNU legacy-font decoder.
 - `pipeline/dictionary_processing/043_pdf_page_splitter_zoom.py` - high-resolution dictionary PDF splitter.
 - `pipeline/dictionary_processing/046_sort_engine.py` - Sgaw Karen dictionary sort and safe correction logic.
+- `pipeline/dictionary_processing/local_translator_suite/` - imported local translator/dictionary suite with scrape/cache lookup, reverse parsing, batch processing, and a mini language-model seed plan.
 
 Older single-image OCR scripts, Streamlit prototypes, Firebase/AI Studio drafts, and unsafe hard-coded-key attempts were moved under `ideas_attempts/` and are ignored.
 
@@ -54,5 +57,6 @@ The app can search existing entries from `karen_dict_full.json` without an API k
 
 - `docs/FILE_AUDIT.md` explains which scattered files are best, which are archived, and which are local-only.
 - `docs/ARCHITECTURE.md` describes the pipeline from source image to OCR output to dictionary entry.
+- `docs/SOURCE_REPOS.md` documents the consolidation from the related Karen language GitHub repos.
 - `docs/PORTFOLIO_MEDIA_PLAN.md` gives Upwork/Fiverr video proof recommendations and captions.
 - `docs/SECURITY.md` documents the ignore policy and the exposed-key cleanup warning.

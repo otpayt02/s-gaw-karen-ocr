@@ -1,0 +1,5 @@
+search_button_text =
+save_button_text =
+dictionary_panel_label =
+reverse_lookup_heading =
+batch_process_button =

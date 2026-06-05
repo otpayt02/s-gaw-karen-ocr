@@ -1,0 +1,72 @@
+{
+  "target_total": 2000,
+  "purpose": "First-pass lexicon plan for a deterministic S'gaw Karen mini language model. Each English seed should be looked up in Glosbe, KarenDictionary.org, Drum Publications, and then stored with Karen term, part of speech, particles used, examples, source URLs, confidence, and notes.",
+  "highest_priority": [
+    "particles/connectors",
+    "pronouns",
+    "question words",
+    "negation/aspect markers",
+    "common verbs",
+    "common nouns",
+    "properties/adjectives",
+    "time/place/quantity words",
+    "UI/database/music domain words",
+    "example phrase frames"
+  ],
+  "bands": [
+    {
+      "name": "grammar_particles_and_connectors",
+      "target_count": 250,
+      "why": "These make dictionary words usable in real phrases.",
+      "examples": ["of", "for", "to", "in", "at", "as", "that", "which", "who", "and", "with", "or", "because", "about", "related", "through", "from", "toward", "when", "where", "if", "then", "only", "all", "still", "already", "not", "must", "can"]
+    },
+    {
+      "name": "pronouns_people_social",
+      "target_count": 150,
+      "why": "Needed for examples, ownership, UI prompts, and real sentences.",
+      "examples": ["I", "me", "my", "you", "your", "he", "she", "it", "we", "our", "they", "their", "person", "people", "child", "adult", "teacher", "student", "singer", "leader", "player", "group", "team", "family", "church"]
+    },
+    {
+      "name": "question_and_instruction_words",
+      "target_count": 100,
+      "why": "Needed for labels, help text, and user actions.",
+      "examples": ["what", "who", "where", "when", "why", "how", "choose", "select", "enter", "type", "click", "press", "open", "close", "save", "cancel", "continue", "back", "next", "finish", "start", "stop"]
+    },
+    {
+      "name": "core_verbs",
+      "target_count": 300,
+      "why": "Verbs let the model build definitions instead of single-word labels.",
+      "examples": ["be", "have", "do", "make", "go", "come", "give", "take", "see", "hear", "know", "think", "want", "need", "use", "help", "guide", "show", "hide", "change", "move", "search", "find", "create", "add", "remove", "delete", "write", "read", "sing", "play", "listen", "record", "upload", "download"]
+    },
+    {
+      "name": "core_nouns_objects",
+      "target_count": 300,
+      "why": "Common objects become building blocks for definitions.",
+      "examples": ["thing", "word", "name", "text", "line", "page", "file", "folder", "book", "photo", "image", "video", "audio", "song", "music", "note", "beat", "measure", "key", "title", "date", "time", "place", "path", "link", "list", "table", "record", "data", "database", "field"]
+    },
+    {
+      "name": "properties_adjectives_adverbs",
+      "target_count": 250,
+      "why": "S'gaw Karen modifiers often follow nouns, so these help grammarized definitions.",
+      "examples": ["new", "old", "current", "next", "previous", "first", "last", "main", "other", "same", "different", "small", "large", "short", "long", "fast", "slow", "clear", "empty", "full", "open", "closed", "selected", "saved", "missing", "active", "hidden", "visible"]
+    },
+    {
+      "name": "time_place_quantity",
+      "target_count": 200,
+      "why": "Needed for dates, performance metadata, and batch status.",
+      "examples": ["today", "tomorrow", "yesterday", "day", "week", "month", "year", "hour", "minute", "now", "later", "before", "after", "here", "there", "above", "below", "inside", "outside", "left", "right", "side", "top", "bottom", "one", "two", "many", "all", "none"]
+    },
+    {
+      "name": "ui_database_music_domain",
+      "target_count": 300,
+      "why": "This is the Karen music website's actual translation domain.",
+      "examples": ["button", "panel", "sidebar", "modal", "overlay", "wizard", "keyboard", "editor", "search", "filter", "setting", "theme", "language", "translation", "metadata", "library", "archive", "chart", "lyrics", "chord", "bass", "melody", "tempo", "genre", "performance", "reference", "media", "romanization"]
+    },
+    {
+      "name": "definition_phrase_frames",
+      "target_count": 150,
+      "why": "Phrase frames teach how to connect words into definitions.",
+      "examples": ["thing for selecting", "place for showing", "guide that helps", "word that means", "list of songs", "property of song", "text for title", "button to save", "file about song", "setting for language", "panel on side", "new song properties"]
+    }
+  ]
+}

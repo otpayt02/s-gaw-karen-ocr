@@ -15,6 +15,7 @@ This folder started as a working research directory. The public repo should show
 | Legacy source decoding | `pipeline/dictionary_processing/042_build_KNU_decoder.py` | High-value work because it handles KNU legacy font extraction and Unicode conversion. |
 | Dictionary page prep | `pipeline/dictionary_processing/043_pdf_page_splitter_zoom.py`, `split_rows_from_dict_images.py` | Best PDF/image preprocessing version. |
 | Dictionary sorting | `pipeline/dictionary_processing/046_sort_engine.py` | Most credible language-specific logic: consonant, tone, vowel, medial sort order and safe correction propagation. |
+| Imported local translator suite | `pipeline/dictionary_processing/local_translator_suite/` | Best useful import from the standalone dictionary-builder repo; adds local scrape/cache lookup, reverse parsing, batch text handling, and a mini-LM seed plan without replacing the main OCR workbench. |
 | Proof assets | `assets/proof/` | Selected charts, predictions, metrics, and static dictionary output suitable for GitHub and portfolio media. |
 
 ## Archived Or Ignored
@@ -29,14 +30,20 @@ This folder started as a working research directory. The public repo should show
 | `ideas_attempts/archived_builders/` | Ignored | Superseded Streamlit, AI Studio, Firebase, one-off Gemini, agent, and template experiments. |
 | `bootstrap_ocr.py`, `gemini_dict_ocr.py` | Archived/ignored | Superseded and contained hard-coded API-key patterns. Do not publish. |
 | Nested `s'gaw-karen-dictionary-builder/` and `karen_dict_template/` | Archived/ignored | Useful attempts, but less credible as final work than the Python OCR/dictionary pipeline. |
+| `otpayt02/Karen-Web-Scraper` source repo | Reference only | Useful conceptually for web lookup and Gemini fallback, but the TypeScript/AI Studio scaffold is less polished than the Python pipeline. No final code import. |
+| `otpayt02/S-gaw-Karen-AI-ML-OCR-Language-Recognition` source repo | Reference only | Contains README/license positioning, not implementation code stronger than this repo. |
+| Generated lookup logs and copied music-site samples from `S-gaw-Karen-Dictionary-Builder` | Left out | Good private history, but too noisy and generated for a clean public portfolio. |
 
 ## Best Dictionary Builder
 
-The best public dictionary builder is `app.py` plus the dictionary processing scripts:
+The best public dictionary builder is the root `app.py` plus the dictionary processing scripts:
 
 - `app.py` for the Flask review and batch-processing surface.
 - `042_build_KNU_decoder.py` for legacy-source conversion.
 - `043_pdf_page_splitter_zoom.py` and `split_rows_from_dict_images.py` for input preparation.
 - `046_sort_engine.py` for Sgaw Karen-aware dictionary ordering and correction behavior.
+- `local_translator_suite/` as the strongest imported side workflow for scrape/cache lookup, reverse parsing, and batch text auditing.
 
 The React/Firebase builder is visually more app-like, but it reads as an AI Studio prototype and depends on Firebase setup. The Streamlit builder is easy to demo but only covers one-image extraction. For a serious portfolio piece, the Python pipeline is more credible because it shows data generation, OCR training, inference, extraction, and review.
+
+See `docs/SOURCE_REPOS.md` for the related GitHub repo consolidation audit.

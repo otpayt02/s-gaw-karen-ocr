@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>S'gaw Karen Local Translator Suite</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>S'gaw Karen Local Translator Suite</h1>
+          <p>Karen music website translation workspace.</p>
+        </div>
+        <div class="status-pill" id="routeStatus">Auto route idle</div>
+      </header>
+
+      <section class="workspace-grid">
+        <article class="panel search-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Search Editor</h2>
+            </div>
+            <div class="segmented" role="group" aria-label="Translation mode">
+              <button class="mode-button active" data-mode="auto">Auto</button>
+              <button class="mode-button" data-mode="en-to-ksw">English → Karen</button>
+              <button class="mode-button" data-mode="ksw-to-en">Karen → English</button>
+            </div>
+          </div>
+
+          <label class="field-label" for="searchInput">Input</label>
+          <textarea id="searchInput" spellcheck="false">new_song_wizard</textarea>
+
+          <div class="keyboard-row" aria-label="Karen quick keys">
+            <button data-key="တၢ်">တၢ်</button>
+            <button data-key="လၢ">လၢ</button>
+            <button data-key="အ">အ</button>
+            <button data-key="ဒီး">ဒီး</button>
+            <button data-key="တဖၣ်">တဖၣ်</button>
+            <button data-key="အသီ">အသီ</button>
+          </div>
+
+          <div class="action-row">
+            <button class="primary" id="runLookup">Run Lookup</button>
+            <button id="clearLookup">Clear</button>
+            <button id="copyResult">Copy Result</button>
+          </div>
+
+          <div class="result-grid">
+            <div>
+              <h3>Result</h3>
+              <pre id="lookupResult" class="result-box"></pre>
+            </div>
+            <div>
+              <h3>Translation Process</h3>
+              <pre id="processResult" class="result-box"></pre>
+            </div>
+          </div>
+          <div class="details-panel">
+            <h3>Attempt Details</h3>
+            <div id="lookupDetails" class="details-list"></div>
+          </div>
+        </article>
+
+        <aside class="panel audit-panel">
+          <div class="panel-heading compact">
+            <div>
+              <h2>Audit Trail</h2>
+            </div>
+            <button id="clearAudit">Clear</button>
+          </div>
+          <div id="auditTrail" class="audit-feed" aria-live="polite"></div>
+        </aside>
+      </section>
+
+      <section class="panel live-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Live translations_website.txt Runner</h2>
+          </div>
+          <div class="action-row tight">
+            <button class="primary" id="runLiveFile">Run Full File</button>
+            <button id="stopLiveFile">Stop</button>
+          </div>
+        </div>
+
+        <div class="live-meta">
+          <div>
+            <span>Source</span>
+            <strong id="liveSourceFile">samples/translations_website.txt</strong>
+          </div>
+          <div>
+            <span>Live Output</span>
+            <strong id="liveOutputFile">translations_updated.txt</strong>
+          </div>
+          <div>
+            <span>Status</span>
+            <strong id="liveMessage">Idle.</strong>
+          </div>
+        </div>
+
+        <div class="progress-wrap" aria-label="Live file progress">
+          <div id="liveProgressBar"></div>
+        </div>
+        <div class="progress-text" id="liveProgressText">0 / 0 lines</div>
+
+        <div class="live-current-grid">
+          <div>
+            <h3>Trying To Translate</h3>
+            <pre id="liveTrying" class="result-box compact-box"></pre>
+          </div>
+          <div>
+            <h3>Supposed To Translate To</h3>
+            <pre id="liveExpected" class="result-box compact-box"></pre>
+          </div>
+          <div>
+            <h3>Dictionary Had</h3>
+            <pre id="liveDictionary" class="result-box compact-box"></pre>
+          </div>
+          <div>
+            <h3>It Thinks It Is</h3>
+            <pre id="liveChosen" class="result-box compact-box"></pre>
+          </div>
+        </div>
+
+        <div class="live-table-wrap">
+          <table class="live-table">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Trying</th>
+                <th>Target</th>
+                <th>Route</th>
+                <th>Lookup</th>
+                <th>Dictionary</th>
+                <th>Guess</th>
+              </tr>
+            </thead>
+            <tbody id="liveRows"></tbody>
+          </table>
+        </div>
+
+        <div class="live-output-grid">
+          <div>
+            <h3>Live Output Tail</h3>
+            <textarea id="liveOutputTail" spellcheck="false" readonly></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace-grid lower-grid">
+        <article class="panel batch-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Batch File Processor</h2>
+            </div>
+            <div class="action-row tight">
+              <input id="batchFile" type="file" accept=".txt,text/plain">
+              <button class="primary" id="runBatch">Process Batch</button>
+              <button id="downloadBatch" disabled>Download</button>
+            </div>
+          </div>
+
+          <div class="batch-editors">
+            <div>
+              <label class="field-label" for="batchInput">Original</label>
+              <textarea id="batchInput" spellcheck="false"></textarea>
+            </div>
+            <div>
+              <label class="field-label" for="batchOutput">Processed</label>
+              <textarea id="batchOutput" spellcheck="false" readonly></textarea>
+            </div>
+          </div>
+        </article>
+
+        <aside class="panel attempts-panel">
+          <div class="panel-heading compact">
+            <div>
+              <h2>Lookup Attempts JSON</h2>
+            </div>
+            <button id="refreshAttempts">Refresh</button>
+          </div>
+          <div class="attempt-summary" id="attemptSummary">No attempts loaded.</div>
+          <div id="attemptList" class="attempt-list"></div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
