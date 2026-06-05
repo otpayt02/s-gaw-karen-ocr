@@ -1,0 +1,529 @@
+{
+  "model": "/workspace/runs/karen_ocr_v2_boosted/weights/best.pt",
+  "overall_mAP50": 0.9653254806041879,
+  "total_classes": 1942,
+  "missed_count": 73,
+  "weak_count": 1,
+  "missed_classes": [
+    {
+      "class_idx": 25,
+      "syllable": "25",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 27,
+      "syllable": "27",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 411,
+      "syllable": "411",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 415,
+      "syllable": "415",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 632,
+      "syllable": "632",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 649,
+      "syllable": "649",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 650,
+      "syllable": "650",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 651,
+      "syllable": "651",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 653,
+      "syllable": "653",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 654,
+      "syllable": "654",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 655,
+      "syllable": "655",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 656,
+      "syllable": "656",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 657,
+      "syllable": "657",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 659,
+      "syllable": "659",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 661,
+      "syllable": "661",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 940,
+      "syllable": "940",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 941,
+      "syllable": "941",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 942,
+      "syllable": "942",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 943,
+      "syllable": "943",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 944,
+      "syllable": "944",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 946,
+      "syllable": "946",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 947,
+      "syllable": "947",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 970,
+      "syllable": "970",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 971,
+      "syllable": "971",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 973,
+      "syllable": "973",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 974,
+      "syllable": "974",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 975,
+      "syllable": "975",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1313,
+      "syllable": "1313",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1318,
+      "syllable": "1318",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1320,
+      "syllable": "1320",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1321,
+      "syllable": "1321",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1322,
+      "syllable": "1322",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1323,
+      "syllable": "1323",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1324,
+      "syllable": "1324",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1573,
+      "syllable": "1573",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1615,
+      "syllable": "1615",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1616,
+      "syllable": "1616",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1619,
+      "syllable": "1619",
+      "mAP50": 0.0,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1880,
+      "syllable": "1880",
+      "mAP50": 0.16583333333333333,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 343,
+      "syllable": "343",
+      "mAP50": 0.24875,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 524,
+      "syllable": "524",
+      "mAP50": 0.24875,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 716,
+      "syllable": "716",
+      "mAP50": 0.24875,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 225,
+      "syllable": "225",
+      "mAP50": 0.33166666666666667,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 392,
+      "syllable": "392",
+      "mAP50": 0.33166666666666667,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 462,
+      "syllable": "462",
+      "mAP50": 0.33166666666666667,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 721,
+      "syllable": "721",
+      "mAP50": 0.33166666666666667,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 1057,
+      "syllable": "1057",
+      "mAP50": 0.33166666666666667,
+      "recall": 0.0,
+      "precision": 0.0
+    },
+    {
+      "class_idx": 21,
+      "syllable": "21",
+      "mAP50": 0.4975,
+      "recall": 0.2076942799957737,
+      "precision": 0.10384713999788685
+    },
+    {
+      "class_idx": 22,
+      "syllable": "22",
+      "mAP50": 0.4975,
+      "recall": 0.44578517990459166,
+      "precision": 0.22289258995229583
+    },
+    {
+      "class_idx": 23,
+      "syllable": "23",
+      "mAP50": 0.4975,
+      "recall": 0.1904133060313393,
+      "precision": 0.09520665301566965
+    },
+    {
+      "class_idx": 217,
+      "syllable": "217",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 252,
+      "syllable": "252",
+      "mAP50": 0.4975,
+      "recall": 0.2033210226987965,
+      "precision": 0.10166051134939826
+    },
+    {
+      "class_idx": 264,
+      "syllable": "264",
+      "mAP50": 0.4975,
+      "recall": 0.23983111500631638,
+      "precision": 0.11991555750315819
+    },
+    {
+      "class_idx": 268,
+      "syllable": "268",
+      "mAP50": 0.4975,
+      "recall": 0.20444909606459483,
+      "precision": 0.10222454803229741
+    },
+    {
+      "class_idx": 273,
+      "syllable": "273",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 287,
+      "syllable": "287",
+      "mAP50": 0.4975,
+      "recall": 1.0,
+      "precision": 0.4906875290094229
+    },
+    {
+      "class_idx": 305,
+      "syllable": "305",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 448,
+      "syllable": "448",
+      "mAP50": 0.4975,
+      "recall": 0.2126608674172904,
+      "precision": 0.1063304337086452
+    },
+    {
+      "class_idx": 452,
+      "syllable": "452",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 464,
+      "syllable": "464",
+      "mAP50": 0.4975,
+      "recall": 0.23093948092758115,
+      "precision": 0.11546974046379058
+    },
+    {
+      "class_idx": 737,
+      "syllable": "737",
+      "mAP50": 0.4975,
+      "recall": 0.13059746791320864,
+      "precision": 0.06529873395660432
+    },
+    {
+      "class_idx": 743,
+      "syllable": "743",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 747,
+      "syllable": "747",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 797,
+      "syllable": "797",
+      "mAP50": 0.4975,
+      "recall": 0.17709325997768788,
+      "precision": 0.08854662998884394
+    },
+    {
+      "class_idx": 838,
+      "syllable": "838",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 861,
+      "syllable": "861",
+      "mAP50": 0.4975,
+      "recall": 0.0,
+      "precision": 1.0
+    },
+    {
+      "class_idx": 1054,
+      "syllable": "1054",
+      "mAP50": 0.4975,
+      "recall": 0.14710181648884804,
+      "precision": 0.07355090824442402
+    },
+    {
+      "class_idx": 1340,
+      "syllable": "1340",
+      "mAP50": 0.4975,
+      "recall": 0.2425643892020117,
+      "precision": 0.12128219460100585
+    },
+    {
+      "class_idx": 1343,
+      "syllable": "1343",
+      "mAP50": 0.4975,
+      "recall": 0.21774842131083674,
+      "precision": 0.10887421065541837
+    },
+    {
+      "class_idx": 1350,
+      "syllable": "1350",
+      "mAP50": 0.4975,
+      "recall": 0.13093654348629846,
+      "precision": 0.06546827174314923
+    },
+    {
+      "class_idx": 1356,
+      "syllable": "1356",
+      "mAP50": 0.4975,
+      "recall": 0.22961096853015733,
+      "precision": 0.11480548426507867
+    },
+    {
+      "class_idx": 1470,
+      "syllable": "1470",
+      "mAP50": 0.4975,
+      "recall": 0.20117585966432758,
+      "precision": 0.10058792983216379
+    },
+    {
+      "class_idx": 1538,
+      "syllable": "1538",
+      "mAP50": 0.4975,
+      "recall": 0.2055035007854753,
+      "precision": 0.10275175039273765
+    }
+  ],
+  "weak_classes": [
+    {
+      "class_idx": 393,
+      "syllable": "393",
+      "mAP50": 0.6633333333333333,
+      "recall": 0.011242240110776803,
+      "precision": 0.011242240110776803
+    }
+  ]
+}

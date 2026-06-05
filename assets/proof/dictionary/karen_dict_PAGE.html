@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Karen Dictionary · Extractor</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+Myanmar:wght@300;400;500;600;700&family=Noto+Serif+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Tokens ─────────────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:         #0c0e14;
+  --surface:    #131720;
+  --surface2:   #1a1f2e;
+  --surface3:   #212840;
+  --border:     #252d42;
+  --border2:    #2f3a57;
+  --text:       #e2e8f8;
+  --text2:      #8895b3;
+  --text3:      #5a6480;
+  --accent:     #6c8fff;
+  --accent2:    #4d6ef5;
+  --green:      #34d399;
+  --green-bg:   #0d2e22;
+  --yellow:     #fbbf24;
+  --yellow-bg:  #2d1d07;
+  --red:        #f87171;
+  --red-bg:     #2d0f0f;
+  --purple:     #a78bfa;
+  --purple-bg:  #1e1040;
+  --teal:       #2dd4bf;
+  --pink:       #f472b6;
+  --orange:     #fb923c;
+  --radius:     12px;
+  --radius-sm:  8px;
+  --radius-xs:  6px;
+  --shadow:     0 4px 24px rgba(0,0,0,.45);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,.3);
+  --transition: .18s cubic-bezier(.4,0,.2,1);
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  line-height:1.5;
+  min-height:100vh;
+}
+
+/* ── Custom Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#27272a;border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:#3f3f46;}
+
+/* ── Karen Unicode Class ────────────────────────────────────────────────── */
+.karen-text{
+  font-family:'Noto Serif Myanmar','Noto Sans Myanmar',sans-serif;
+  font-size:18px;
+  font-weight:500;
+  line-height:1.6;
+  letter-spacing:.04em;
+  color:#c7d6ff;
+}
+.karen-inline{
+  font-family:'Noto Sans Myanmar',sans-serif;
+  line-height:1.6;
+  letter-spacing:.05em;
+}
+
+/* ── Layout Shell ───────────────────────────────────────────────────────── */
+.app-shell{
+  display:grid;
+  grid-template-rows:56px 1fr;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ── Top Bar ────────────────────────────────────────────────────────────── */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  gap:16px;
+  z-index:10;
+}
+.topbar-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
+  font-size:15px;
+  color:var(--text);
+  letter-spacing:-.01em;
+}
+.topbar-brand .glyph{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent2),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Sans Myanmar',sans-serif;font-size:14px;font-weight:700;color:#fff;
+  box-shadow:0 2px 8px rgba(108,143,255,.3);
+}
+.topbar-brand small{
+  color:var(--text3);font-size:12px;font-weight:400;
+}
+.health-bar{
+  display:flex;align-items:center;gap:12px;font-size:12px;flex:1;overflow:hidden;
+  justify-content:flex-end;
+}
+.health-chip{
+  display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
+  border:1px solid var(--border2);background:var(--surface2);white-space:nowrap;
+}
+.dot{width:7px;height:7px;border-radius:50%;}
+.dot.ok{background:var(--green);box-shadow:0 0 6px var(--green);}
+.dot.bad{background:var(--red);box-shadow:0 0 6px var(--red);}
+.dot.warn{background:var(--yellow);box-shadow:0 0 6px var(--yellow);}
+
+/* ── Main Content ───────────────────────────────────────────────────────── */
+.main-body{
+  display:grid;
+  grid-template-columns:380px 1fr;
+  overflow:hidden;
+}
+.sidebar{
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+  padding:18px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.main-view{
+  overflow-y:auto;
+  padding:18px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+}
+.card-title{
+  font-size:12px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--text3);
+  margin-bottom:14px;
+}
+
+/* ── Form Controls ──────────────────────────────────────────────────────── */
+label{display:block;color:var(--text3);font-size:11px;font-weight:500;margin-bottom:5px;margin-top:12px;letter-spacing:.04em;text-transform:uppercase;}
+label:first-child{margin-top:0;}
+input[type=text],input[type=number],textarea{
+  width:100%;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:var(--radius-sm);
+  padding:9px 11px;
+  font-size:13px;
+  font-family:'Inter',sans-serif;
+  transition:border-color var(--transition),box-shadow var(--transition);
+  outline:none;
+}
+input[type=text]:focus,input[type=number]:focus,textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(108,143,255,.15);
+}
+textarea{resize:vertical;min-height:64px;line-height:1.5;}
+input[type=file]{
+  width:100%;color:var(--text2);font-size:12px;
+  background:var(--surface2);border:1px dashed var(--border2);
+  border-radius:var(--radius-sm);padding:9px 11px;cursor:pointer;
+  transition:border-color var(--transition);
+}
+input[type=file]:hover{border-color:var(--accent);}
+.check-row{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text2);}
+.check-row input[type=checkbox]{
+  width:15px;height:15px;cursor:pointer;accent-color:var(--accent);border-radius:4px;
+}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+button{
+  cursor:pointer;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border2);
+  background:var(--surface2);
+  color:var(--text);
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:500;
+  font-family:'Inter',sans-serif;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:background var(--transition),border-color var(--transition),transform var(--transition),box-shadow var(--transition);
+  white-space:nowrap;
+}
+button:hover{background:var(--surface3);border-color:var(--border2);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+button:active{transform:translateY(0);}
+button.btn-primary{background:var(--accent2);border-color:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(77,110,245,.35);}
+button.btn-primary:hover{background:#5b7ffe;box-shadow:0 4px 16px rgba(77,110,245,.45);}
+button.btn-success{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+button.btn-success:hover{background:#0e3a2a;}
+button.btn-danger{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+button.btn-danger:hover{background:#3d1212;}
+button.btn-warn{background:var(--yellow-bg);border-color:var(--yellow);color:var(--yellow);}
+button.btn-warn:hover{background:#3a2509;}
+button.btn-purple{background:var(--purple-bg);border-color:var(--purple);color:var(--purple);}
+button.btn-purple:hover{background:#261550;}
+button.btn-sm{padding:5px 10px;font-size:12px;}
+
+/* ── Primary Tab Bar ────────────────────────────────────────────────────── */
+.tab-bar{
+  display:flex;
+  gap:2px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:4px;
+  margin-bottom:16px;
+}
+.tab-btn{
+  flex:1;
+  text-align:center;
+  padding:9px 14px;
+  border:none;
+  background:transparent;
+  color:var(--text3);
+  font-size:13px;
+  font-weight:500;
+  border-radius:7px;
+  cursor:pointer;
+  transition:background var(--transition),color var(--transition),box-shadow var(--transition);
+  transform:none;
+  box-shadow:none;
+}
+.tab-btn:hover{background:var(--surface2);color:var(--text2);transform:none;box-shadow:none;}
+.tab-btn.active{
+  background:var(--surface3);
+  color:var(--accent);
+  box-shadow:0 1px 3px rgba(0,0,0,.4),inset 0 0 0 1px var(--border2);
+}
+
+/* ── Sub Tab Bar (per-entry) ────────────────────────────────────────────── */
+.subtab-bar{
+  display:flex;
+  gap:0;
+  border-bottom:2px solid var(--border);
+  margin:12px 0 10px;
+}
+.subtab-btn{
+  padding:8px 14px;
+  font-size:12px;
+  font-weight:500;
+  border:none;
+  background:transparent;
+  color:var(--text3);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
+  border-radius:0;
+  transition:color var(--transition),border-color var(--transition);
+  transform:none;box-shadow:none;
+}
+.subtab-btn:hover{color:var(--text2);background:transparent;transform:none;box-shadow:none;}
+.subtab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.subpane{display:none;}
+.subpane.active{display:block;}
+
+/* ── Pill Badges ────────────────────────────────────────────────────────── */
+.pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:2px 8px;border-radius:999px;border:1px solid;
+  white-space:nowrap;
+}
+.pill-default{background:#0f1a2e;color:#93b4ff;border-color:#1e3260;}
+.pill-flag{background:#3d1a00;color:#fbbf24;border-color:#7a3b00;}
+.pill-promoted{background:var(--green-bg);color:var(--green);border-color:#1a5c3a;}
+.pill-compound{background:var(--yellow-bg);color:var(--yellow);border-color:#5a3400;}
+.pill-example{background:var(--purple-bg);color:var(--purple);border-color:#3d2080;}
+.pill-idx{background:var(--surface2);color:var(--text3);border-color:var(--border);}
+
+/* ── Entry Cards ────────────────────────────────────────────────────────── */
+.entries-grid{display:flex;flex-direction:column;gap:12px;}
+.entry{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px;
+  transition:border-color var(--transition),box-shadow var(--transition);
+}
+.entry:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.entry.et-compound{border-left:3px solid var(--yellow);}
+.entry.et-example{border-left:3px solid var(--purple);}
+.entry.et-promoted{border-left:3px solid var(--green);}
+.entry-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;margin-bottom:12px;flex-wrap:wrap;
+}
+.entry-head-left{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.entry-meta{font-size:11px;color:var(--text3);margin-left:auto;white-space:nowrap;}
+
+/* ── Render Box (colored definition display) ────────────────────────────── */
+.renderbox{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  line-height:1.8;
+  font-size:13px;
+  margin-bottom:8px;
+}
+.renderbox:last-child{margin-bottom:0;}
+
+/* ── Segment Colors ─────────────────────────────────────────────────────── */
+.seg{font-weight:600;border-radius:3px;padding:0 2px;}
+.seg-example{color:#d8b4fe;text-decoration:underline dotted #d8b4fe44;}
+.seg-headword{color:#93c5fd;}
+.seg-compound{color:#fcd34d;}
+.seg-cross_reference{color:#7dd3fc;}
+.seg-analogous{color:#67e8f9;}
+.seg-cognate{color:#f0abfc;}
+.seg-grammar{color:#99f6e4;}
+.seg-ditto{color:#a1a1aa;}
+.seg-other{color:#fca5a5;}
+
+/* ── Meta Items Grid (examples/related tab) ─────────────────────────────── */
+.meta-grid{display:flex;flex-direction:column;gap:8px;}
+.meta-item{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  font-size:13px;
+  display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;
+}
+.meta-item-text{flex:1;min-width:0;line-height:1.6;}
+.meta-note{color:var(--text3);font-size:11px;margin-top:3px;}
+.meta-kind-pill{
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;border:1px solid;white-space:nowrap;flex-shrink:0;
+}
+.mk-example{background:#2e0764;color:#e9d5ff;border-color:#7e22ce;}
+.mk-compound{background:#3f2000;color:#fed7aa;border-color:#c05621;}
+.mk-cross_reference{background:#082940;color:#bae6fd;border-color:#0369a1;}
+.mk-analogous{background:#022c22;color:#a7f3d0;border-color:#059669;}
+.mk-cognate{background:#3a0a4a;color:#f5d0fe;border-color:#a21caf;}
+.mk-grammar{background:#01302b;color:#99f6e4;border-color:#0d9488;}
+.mk-ditto{background:#27272a;color:#d4d4d8;border-color:#52525b;}
+.mk-headword{background:#1e3a8a;color:#bfdbfe;border-color:#3b82f6;}
+.mk-other{background:#1c1c1e;color:#a1a1aa;border-color:#3f3f46;}
+
+/* ── Status / Log ───────────────────────────────────────────────────────── */
+.statusbox,.logbox{
+  background:#080c14;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px;
+  font-family:'Consolas','Courier New',monospace;
+  font-size:12px;
+  white-space:pre-wrap;
+  line-height:1.65;
+  color:#8ba7d4;
+}
+.logbox{
+  max-height:220px;
+  min-height:120px;
+  overflow-y:auto;
+}
+
+/* ── Badges strip ───────────────────────────────────────────────────────── */
+.badges-strip{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
+}
+.badge-count{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:6px 14px;
+  font-size:12px;
+  font-weight:500;
+  display:flex;align-items:center;gap:6px;
+}
+.badge-count span{color:var(--accent);font-size:15px;font-weight:600;}
+
+/* ── Empty state ────────────────────────────────────────────────────────── */
+.empty{
+  text-align:center;padding:40px 20px;color:var(--text3);
+  border:1px dashed var(--border);border-radius:var(--radius);
+}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:.5;}
+
+/* ── Divider ────────────────────────────────────────────────────────────── */
+hr{border:none;border-top:1px solid var(--border);margin:12px 0;}
+
+/* ── Search bar ─────────────────────────────────────────────────────────── */
+.search-bar{
+  position:relative;
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.search-bar input{flex:1;min-width:150px;}
+
+/* ── Hint text ──────────────────────────────────────────────────────────── */
+.hint{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6;}
+
+/* ── Progress bar ───────────────────────────────────────────────────────── */
+.progress-bar{
+  height:4px;background:var(--surface2);border-radius:999px;overflow:hidden;margin:8px 0;
+}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--purple));border-radius:999px;transition:width .4s;}
+
+/* ── Section label ──────────────────────────────────────────────────────── */
+.section-label{
+  display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;
+  color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+<!-- ── Top Bar ─────────────────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="glyph">က</div>
+    <div>
+      Karen Dictionary
+      <br><small>OCR Extractor · Sgaw</small>
+    </div>
+  </div>
+  <div id="health" class="health-bar">
+    <div class="health-chip"><div class="dot warn"></div>Checking…</div>
+  </div>
+</header>
+
+<!-- ── Main Body ───────────────────────────────────────────────────────── -->
+<div class="main-body">
+
+<!-- LEFT SIDEBAR ──────────────────────────────────────────────────────── -->
+<aside class="sidebar">
+
+  <!-- Batch Config -->
+  <div class="card">
+    <div class="card-title">⚙ Batch Configuration</div>
+    <div class="r2">
+      <div><label>PDF pages/batch</label><input id="c_pdf" type="number" min="1"></div>
+      <div><label>Images/batch</label><input id="c_img" type="number" min="1"></div>
+    </div>
+    <div class="r3">
+      <div><label>Delay (s)</label><input id="c_delay" type="number" min="0" step="0.1"></div>
+      <div><label>Page offset</label><input id="c_off" type="number" step="1"></div>
+      <div><label>Render DPI</label><input id="c_dpi" type="number" min="72"></div>
+    </div>
+    <div class="check-row"><input id="c_skip" type="checkbox"><label for="c_skip" style="margin:0;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text2)">Skip already processed</label></div>
+    <div class="check-row"><input id="c_boot" type="checkbox"><label for="c_boot" style="margin:0;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text2)">Auto-import bootstrap JSONs</label></div>
+    <div class="btn-row">
+      <button class="btn-success" onclick="cfgSave()">Save config</button>
+      <button onclick="cfgLoad()">Reload</button>
+      <button onclick="importBootstrap()">Import bootstrap</button>
+    </div>
+  </div>
+
+  <!-- PDF Extraction -->
+  <div class="card">
+    <div class="card-title">📄 PDF Extraction</div>
+    <label>Dictionary PDF</label>
+    <input id="pdfFile" type="file" accept=".pdf">
+    <div class="r2" style="margin-top:10px">
+      <div><label>Start page</label><input id="pdfStart" type="number" min="1" value="1"></div>
+      <div><label>End page</label><input id="pdfEnd" type="number" min="1" value="5"></div>
+    </div>
+    <div class="btn-row"><button class="btn-primary" onclick="runPdf()">Upload PDF &amp; Extract</button></div>
+  </div>
+
+  <!-- Image Folder -->
+  <div class="card">
+    <div class="card-title">🗂 Image Folder</div>
+    <label>Full folder path</label>
+    <input id="imgFolder" type="text" placeholder="C:/Users/olive/.../dict_images">
+    <div class="r2" style="margin-top:10px">
+      <div><label>Start at #</label><input id="imgStart" type="number" min="1" value="1"></div>
+      <div><label>Count</label><input id="imgCount" type="number" min="1" placeholder="from config"></div>
+    </div>
+    <div class="btn-row"><button class="btn-primary" onclick="runFolder()">Run Folder Batch</button></div>
+  </div>
+
+  <!-- Upload Images -->
+  <div class="card">
+    <div class="card-title">🖼 Upload Images</div>
+    <input id="imgFiles" type="file" accept=".png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff" multiple>
+    <div class="btn-row"><button class="btn-primary" onclick="runUpload()">Upload &amp; Extract</button></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="card">
+    <div class="card-title">🔧 Controls</div>
+    <div class="btn-row">
+      <button class="btn-danger" onclick="forceReset()">⚠ Force Reset</button>
+      <button class="btn-warn" onclick="cancelBatch()">Cancel Batch</button>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="card">
+    <div class="card-title">📊 Status</div>
+    <div id="progress_bar" class="progress-bar" style="display:none"><div id="progress_fill" class="progress-fill" style="width:0%"></div></div>
+    <div id="status" class="statusbox">Loading…</div>
+  </div>
+
+  <!-- Log -->
+  <div class="card">
+    <div class="card-title">📋 Live Log</div>
+    <div id="logbox" class="logbox">Waiting…</div>
+  </div>
+
+</aside>
+
+<!-- MAIN VIEW ─────────────────────────────────────────────────────────── -->
+<main class="main-view">
+
+  <!-- Search -->
+  <div class="card">
+    <div class="search-bar">
+      <input id="srchText" type="text" placeholder="Search Karen script or English definition…" style="flex:2">
+      <input id="srchPage" type="number" min="1" placeholder="Page #" style="max-width:100px">
+      <button onclick="search()">Search</button>
+      <button onclick="clearSearch()">Clear</button>
+      <button onclick="loadAll()">↺ Reload</button>
+      <button onclick="flagToggle()" id="flagBtn">⚑ Flagged</button>
+    </div>
+    <p class="hint">Original definition text is always stored verbatim. The entry tabs show recognized material from within that text — nothing is removed from the definition.</p>
+  </div>
+
+  <!-- Counts -->
+  <div class="badges-strip">
+    <div class="badge-count">Total <span id="b_total">–</span></div>
+    <div class="badge-count">Headwords <span id="b_hw">–</span></div>
+    <div class="badge-count">Compounds <span id="b_co">–</span></div>
+    <div class="badge-count">Examples <span id="b_ex">–</span></div>
+  </div>
+
+  <!-- Primary Tabs -->
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" id="tbtn_hw" onclick="switchTab('hw',this)">Headwords</button>
+    <button class="tab-btn" id="tbtn_co" onclick="switchTab('co',this)">Compounds</button>
+    <button class="tab-btn" id="tbtn_ex" onclick="switchTab('ex',this)">Standalone Examples</button>
+  </div>
+
+  <div id="pane_hw" class="tab-pane">
+    <div id="list_hw" class="entries-grid">
+      <div class="empty"><div class="empty-icon">📖</div>No headwords yet.</div>
+    </div>
+  </div>
+  <div id="pane_co" class="tab-pane" style="display:none">
+    <p class="hint" style="margin-bottom:12px">Sub-entries (co.) — promote to move to Headwords.</p>
+    <div id="list_co" class="entries-grid">
+      <div class="empty"><div class="empty-icon">🔗</div>No compound entries yet.</div>
+    </div>
+  </div>
+  <div id="pane_ex" class="tab-pane" style="display:none">
+    <p class="hint" style="margin-bottom:12px">Phrases found inside definitions — not confirmed headwords. Promote to confirm.</p>
+    <div id="list_ex" class="entries-grid">
+      <div class="empty"><div class="empty-icon">💬</div>No standalone example entries yet.</div>
+    </div>
+  </div>
+
+</main>
+</div>
+</div>
+
+<script>
+"use strict";
+let _flagged=false, _srchText="", _srchPage="", _activeTab="hw";
+
+async function call(url, opts){
+  let res, data;
+  try{
+    res = await fetch(url, opts||{});
+    data = await res.json();
+  }catch(e){alert("Network error: "+e.message);throw e;}
+  if(!res.ok||data.ok===false){alert("Error:\n"+(data.error||"Status "+res.status));throw new Error(data.error||"error");}
+  return data;
+}
+
+function esc(t){return String(t??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
+
+function mkKindPill(kind){
+  const k=String(kind||"other");
+  const label=k.replaceAll("_"," ");
+  return '<span class="meta-kind-pill mk-'+esc(k)+'">'+esc(label)+'</span>';
+}
+
+async function checkHealth(){
+  try{
+    const d=await call("/api/health");
+    const chips=[];
+    chips.push('<div class="health-chip"><div class="dot '+(d.key_ok?"ok":"bad")+'"></div>'+(d.key_ok?"Gemini key ✓":"No API key")+'</div>');
+    chips.push('<div class="health-chip"><div class="dot ok"></div>'+esc(d.model)+'</div>');
+    chips.push('<div class="health-chip"><div class="dot ok"></div>'+d.entry_count+' entries</div>');
+    document.getElementById("health").innerHTML=chips.join("");
+  }catch(e){
+    document.getElementById("health").innerHTML='<div class="health-chip"><div class="dot bad"></div>Health error</div>';
+  }
+}
+
+async function cfgLoad(){
+  const d=await call("/api/config");
+  const c=d.config;
+  document.getElementById("c_pdf").value=c.pdf_pages_per_batch;
+  document.getElementById("c_img").value=c.images_per_batch;
+  document.getElementById("c_delay").value=c.delay_seconds;
+  document.getElementById("c_off").value=c.page_offset;
+  document.getElementById("c_dpi").value=c.render_dpi;
+  document.getElementById("c_skip").checked=!!c.skip_processed;
+  document.getElementById("c_boot").checked=!!c.auto_import_bootstrap;
+}
+
+async function cfgSave(){
+  const p={
+    pdf_pages_per_batch:+document.getElementById("c_pdf").value||10,
+    images_per_batch:+document.getElementById("c_img").value||20,
+    delay_seconds:+document.getElementById("c_delay").value||1.5,
+    page_offset:+document.getElementById("c_off").value||0,
+    render_dpi:+document.getElementById("c_dpi").value||200,
+    skip_processed:document.getElementById("c_skip").checked,
+    auto_import_bootstrap:document.getElementById("c_boot").checked,
+  };
+  await call("/api/config",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
+  alert("Config saved.");
+}
+
+async function pollStatus(){
+  try{
+    const d=await call("/api/status");
+    const s=d.status;
+    document.getElementById("status").textContent=[
+      "running:   "+s.running,
+      "mode:      "+(s.mode||"—"),
+      "progress:  "+s.done+" / "+s.total,
+      "added:     "+s.entries_added,
+      "file:      "+(s.file||"—"),
+      "page:      "+(s.page||"—"),
+      "started:   "+(s.started||"—"),
+      "finished:  "+(s.finished||"—"),
+      "error:     "+(s.error||"none"),
+    ].join("\n");
+
+    const pb=document.getElementById("progress_bar");
+    const pf=document.getElementById("progress_fill");
+    if(s.running&&s.total>0){
+      pb.style.display="block";
+      pf.style.width=Math.round(s.done/s.total*100)+"%";
+    }else{
+      pb.style.display="none";
+    }
+
+    const lb=document.getElementById("logbox");
+    lb.textContent=(s.log||[]).join("\n");
+    lb.scrollTop=lb.scrollHeight;
+    if(s.finished&&!s.running){loadAll();checkHealth();}
+  }catch(e){}
+}
+
+async function importBootstrap(){
+  const d=await call("/api/import_bootstrap",{method:"POST"});
+  alert(d.message);
+  await loadAll();
+}
+
+function switchTab(name, btn){
+  _activeTab=name;
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-pane").forEach(p=>p.style.display="none");
+  if(btn) btn.classList.add("active");
+  document.getElementById("pane_"+name).style.display="block";
+}
+
+function switchSub(idx, name, btn){
+  const root=document.getElementById("entry_"+idx);
+  root.querySelectorAll(".subtab-btn").forEach(b=>b.classList.remove("active"));
+  root.querySelectorAll(".subpane").forEach(p=>p.classList.remove("active"));
+  btn.classList.add("active");
+  root.querySelector("#sub_"+idx+"_"+name).classList.add("active");
+}
+
+async function loadAll(){
+  const p=new URLSearchParams();
+  if(_flagged) p.set("flagged","1");
+  if(_srchText) p.set("q",_srchText);
+  if(_srchPage) p.set("page",_srchPage);
+  try{
+    const d=await call("/api/entries?"+p.toString());
+    document.getElementById("b_total").textContent=d.total;
+    document.getElementById("b_hw").textContent=d.n_hw;
+    document.getElementById("b_co").textContent=d.n_co;
+    document.getElementById("b_ex").textContent=d.n_ex;
+    renderEntries("list_hw",d.headwords,false);
+    renderEntries("list_co",d.compounds,true);
+    renderEntries("list_ex",d.examples,true);
+  }catch(e){
+    document.getElementById("list_hw").innerHTML='<div class="empty">Load error: '+esc(e.message)+'</div>';
+  }
+}
+
+function renderMetaItems(items, emptyMsg){
+  if(!items||!items.length) return '<p style="color:var(--text3);font-size:12px;padding:6px 0">'+esc(emptyMsg)+'</p>';
+  return '<div class="meta-grid">'+items.map(it=>{
+    const txt=typeof it==="string"?it:(it.text||"");
+    const kind=typeof it==="string"?"other":(it.kind||"other");
+    const note=typeof it==="string"?"":(it.note||"");
+    return '<div class="meta-item">'+mkKindPill(kind)+'<div class="meta-item-text">'+esc(txt)+(note?'<div class="meta-note">'+esc(note)+'</div>':'')+'</div></div>';
+  }).join("")+'</div>';
+}
+
+function renderDefs(defs){
+  if(!defs||!defs.length) return '<p style="color:var(--text3);font-size:12px">No definitions.</p>';
+  return defs.map(x=>'<div class="renderbox karen-inline">'+x+'</div>').join("");
+}
+
+function buildEntryCard(x, showPromote){
+  const wasEdited=x.updated_at&&x.updated_at!==x.created_at;
+  const et=x.entry_type||"headword";
+  const cls=x.promoted?"et-promoted":("et-"+et);
+
+  let pills='<span class="pill pill-idx">#'+x.index+'</span>';
+  if(x.flag) pills+='<span class="pill pill-flag">⚑ Flagged</span>';
+  if(x.promoted) pills+='<span class="pill pill-promoted">Promoted ✓</span>';
+  else if(et==="compound") pills+='<span class="pill pill-compound">Compound</span>';
+  else if(et==="example") pills+='<span class="pill pill-example">Example</span>';
+  if(wasEdited) pills+='<span class="pill pill-default">Edited</span>';
+
+  const promoBtn=(showPromote&&!x.promoted)
+    ?'<button class="btn-purple btn-sm" onclick="promote('+x.index+')">↑ Promote to Headword</button>':'';
+
+  return ''
+  +'<div class="entry '+cls+'" id="entry_'+x.index+'">'
+  +'<div class="entry-head">'
+  +'<div class="entry-head-left">'+pills+'</div>'
+  +'<span class="entry-meta">'+esc(x.source||"")+(x.page?' · pg '+x.page:'')+'</span>'
+  +'</div>'
+  +'<label>Karen Headword</label>'
+  +'<textarea class="karen-inline" id="k'+x.index+'" style="font-family:\'Noto Serif Myanmar\',\'Noto Sans Myanmar\',sans-serif;font-size:17px;min-height:44px">'+esc(x.karen||"")+'</textarea>'
+  +'<label>Definition text (stored verbatim)</label>'
+  +'<textarea id="d'+x.index+'">'+esc((x.definitions||[]).join("\n"))+'</textarea>'
+  +'<div class="subtab-bar">'
+  +'<button class="subtab-btn active" onclick="switchSub('+x.index+',\'full\',this)">📝 Full Definition</button>'
+  +'<button class="subtab-btn" onclick="switchSub('+x.index+',\'examples\',this)">💬 Example Sentences</button>'
+  +'<button class="subtab-btn" onclick="switchSub('+x.index+',\'headwords\',this)">🔤 Headword Terms</button>'
+  +'<button class="subtab-btn" onclick="switchSub('+x.index+',\'related\',this)">🔗 Related / Grammar</button>'
+  +'</div>'
+  +'<div id="sub_'+x.index+'_full" class="subpane active">'
+  +renderDefs(x.decorated_definitions||[])
+  +'</div>'
+  +'<div id="sub_'+x.index+'_examples" class="subpane">'
+  +renderMetaItems(x.tab_examples||[],"No example sentences recognized yet.")
+  +'</div>'
+  +'<div id="sub_'+x.index+'_headwords" class="subpane">'
+  +renderMetaItems(x.tab_headwords||[],"No headword-like terms recognized yet.")
+  +'</div>'
+  +'<div id="sub_'+x.index+'_related" class="subpane">'
+  +renderMetaItems(x.tab_related||[],"No related items or grammar notes recognized yet.")
+  +'</div>'
+  +'<div class="btn-row">'
+  +'<button class="btn-success btn-sm" onclick="save('+x.index+')">Save</button>'
+  +'<button class="btn-sm" onclick="reanalyze('+x.index+')">Re-analyze</button>'
+  +promoBtn
+  +'</div>'
+  +'</div>';
+}
+
+function renderEntries(id, items, showPromote){
+  const el=document.getElementById(id);
+  if(!items||!items.length){
+    el.innerHTML='<div class="empty"><div class="empty-icon">📭</div>No entries.</div>';
+    return;
+  }
+  el.innerHTML=items.map(x=>buildEntryCard(x,showPromote)).join("");
+}
+
+function search(){
+  _srchText=document.getElementById("srchText").value.trim();
+  _srchPage=document.getElementById("srchPage").value.trim();
+  loadAll();
+}
+
+function clearSearch(){
+  _srchText="";_srchPage="";_flagged=false;
+  document.getElementById("srchText").value="";
+  document.getElementById("srchPage").value="";
+  document.getElementById("flagBtn").style.color="";
+  loadAll();
+}
+
+function flagToggle(){
+  _flagged=!_flagged;
+  document.getElementById("flagBtn").style.color=_flagged?"var(--yellow)":"";
+  loadAll();
+}
+
+async function save(idx){
+  const k=document.getElementById("k"+idx).value;
+  const ds=document.getElementById("d"+idx).value.split("\n").map(x=>x.trim()).filter(Boolean);
+  await call("/api/entry/"+idx,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({karen:k,definitions:ds})});
+  await loadAll();
+}
+
+async function reanalyze(idx){
+  await call("/api/reanalyze/"+idx,{method:"POST"});
+  await loadAll();
+}
+
+async function promote(idx){
+  await call("/api/promote/"+idx,{method:"POST"});
+  await loadAll();
+}
+
+async function runPdf(){
+  const file=document.getElementById("pdfFile").files[0];
+  if(!file){alert("Pick a PDF first.");return;}
+  const form=new FormData();
+  form.append("pdf",file);
+  form.append("start",document.getElementById("pdfStart").value||"1");
+  form.append("end",document.getElementById("pdfEnd").value||"5");
+  const d=await call("/api/run/pdf",{method:"POST",body:form});
+  alert(d.message);
+}
+
+async function runFolder(){
+  const fp=document.getElementById("imgFolder").value.trim();
+  if(!fp){alert("Enter the folder path.");return;}
+  const start=+document.getElementById("imgStart").value||1;
+  const craw=document.getElementById("imgCount").value.trim();
+  const count=craw?+craw:null;
+  const d=await call("/api/run/folder",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({folder:fp,start,count})});
+  alert(d.message);
+}
+
+async function runUpload(){
+  const files=document.getElementById("imgFiles").files;
+  if(!files||!files.length){alert("Pick image files first.");return;}
+  const form=new FormData();
+  for(const f of files) form.append("images",f);
+  const d=await call("/api/run/images",{method:"POST",body:form});
+  alert(d.message);
+}
+
+async function cancelBatch(){
+  const d=await call("/api/cancel",{method:"POST"});
+  alert(d.message);
+}
+
+async function forceReset(){
+  if(!confirm("Force-reset batch state? Only do this if stuck.")) return;
+  const d=await call("/api/force_reset",{method:"POST"});
+  alert(d.message);
+}
+
+window.addEventListener("load",async()=>{
+  await checkHealth();
+  await cfgLoad();
+  await loadAll();
+  await pollStatus();
+  setInterval(pollStatus,3000);
+  setInterval(checkHealth,20000);
+});
+</script>
+</body>
+</html>

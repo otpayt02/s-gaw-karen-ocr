@@ -1,0 +1,9 @@
+{
+  "pdf_pages_per_batch": 10,
+  "images_per_batch": 50,
+  "delay_seconds": 2,
+  "page_offset": 0,
+  "render_dpi": 220,
+  "skip_processed": true,
+  "auto_import_bootstrap": true
+}

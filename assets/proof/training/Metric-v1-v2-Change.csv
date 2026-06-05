@@ -1,0 +1,5 @@
+"Metric","v1","v2","Change"
+"Overall mAP50","0.888","0.965","'+7.7 pts"
+"Missed syllables","149","73","'-51%"
+"Inference speed","~1.1ms","1.1ms","Same"
+"Training images","17,796","30,721","'+73%"

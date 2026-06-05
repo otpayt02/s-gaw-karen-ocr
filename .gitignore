@@ -1,0 +1,73 @@
+# Python/runtime
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Local secrets and provider config
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.cer
+
+# Logs and local run state
+*.log
+*_log.txt
+memory.json
+processed.json
+processed_sources.json
+progress.json
+groundtruth_corrections.json
+example_sentences.json
+dict_entries_manifest.json
+corrections_log.json
+parts_speech.json
+sk_dictionary.json
+skeleton_headwords.json
+karendictdatabase.json
+
+# Large/generated OCR artifacts
+app_data/
+karendataset/
+dict_images/
+dict_rows/
+karen_dict_pages/
+karen_ocr_v1_results/
+correction_screenshots/
+glyph_check/
+dataset_part_*.bin
+*.pt
+*.onnx
+*.engine
+*.zip
+
+# Extra local fonts; the public app keeps padauk_reg.ttf and fonts/Padauk only.
+fonts/Noto_Serif_Myanmar/
+fonts/Kawthoolei-Regular.ttf
+noto_ser_mm_reg.ttf
+kaw_reg.ttf
+
+# Raw source documents and local reference dumps
+*.pdf
+*.jpg
+*.jpeg
+*.png
+!assets/proof/**/*.jpg
+!assets/proof/**/*.jpeg
+!assets/proof/**/*.png
+
+# Drafts and superseded app attempts stay local
+ideas_attempts/**
+!ideas_attempts/README.md
+
+# Node/Firebase attempts if restored locally
+node_modules/
+dist/
+build/
+coverage/
+firebase-debug.log
+firestore-debug.log
